@@ -16,6 +16,16 @@ const { isAllowedOrigin } = require("./lib/corsPolicy");
 const { createWebRiskLimiter, createWebRiskDailyLimiter, createHealthLimiter } = require("./lib/rateLimitPolicy");
 
 const app = express();
+// Render (like most PaaS hosts) places this service behind one proxy/load
+// balancer hop, which sets X-Forwarded-For. Without this, express-rate-limit
+// refuses to trust that header (ERR_ERL_UNEXPECTED_X_FORWARDED_FOR) and
+// req.ip would otherwise resolve to the proxy's own IP for every request,
+// not the real client - collapsing everyone into one rate-limit bucket.
+// `1` means "trust exactly one hop in front of this app", matching Render's
+// single-proxy setup; it must not be `true` (which trusts every hop
+// unconditionally, letting a client spoof its own X-Forwarded-For).
+app.set("trust proxy", 1);
+
 const PORT = process.env.PORT || 8787;
 const NODE_ENV = process.env.NODE_ENV || "development";
 

@@ -1,0 +1,46 @@
+# PhishGuard - root .gitignore
+#
+# Goal: make it structurally hard for a real secret or a throwaway/OS file
+# to ever end up in this repo, without hiding anything the deployed backend,
+# the Chrome Web Store package, or the test suite actually needs.
+
+# --- Secrets ----------------------------------------------------------------
+# Any real .env file, anywhere in the repo, at any depth. The one deliberate
+# exception is backend/.env.example, which must stay tracked - it's the
+# placeholder template contributors and Render's setup docs point to, and it
+# is why "!.env.example" is required, not optional: `.env.*` alone would
+# also match and hide it.
+.env
+.env.*
+!.env.example
+
+# --- Real dependency installs ------------------------------------------------
+# Deliberately scoped to backend/node_modules/ only - NOT a blanket
+# "node_modules/" - because testing/shims/node_modules/ is a small,
+# hand-written, intentionally-committed offline-test fixture (see its own
+# files' header comments), not a real npm install. A blanket rule would
+# silently hide that fixture from git too. backend/node_modules/ itself is
+# always reproducible from backend/package-lock.json via `npm ci`.
+backend/node_modules/
+
+# --- Packaged/output artifacts ------------------------------------------------
+# A built extension/checkpoint ZIP is a build output, never a source file.
+*.zip
+
+# --- Logs ---------------------------------------------------------------------
+# Ignore stray/scratch logs by default, but keep the two disclosed,
+# intentional test-evidence logs this project keeps on purpose as part of
+# its own audit trail.
+*.log
+!testing/reports/*.log
+
+# --- OS / editor junk ---------------------------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Scratch / temporary files -------------------------------------------------
+*.tmp
+*.swp
+*~
