@@ -1,0 +1,268 @@
+TAP version 13
+# Subtest: [OFFLINE] corsPolicy: missing Origin header (server-to-server / curl / health checks) is allowed
+ok 1 - [OFFLINE] corsPolicy: missing Origin header (server-to-server / curl / health checks) is allowed
+  ---
+  duration_ms: 0.742595
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] corsPolicy: exact configured production origin is allowed
+ok 2 - [OFFLINE] corsPolicy: exact configured production origin is allowed
+  ---
+  duration_ms: 0.126333
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] corsPolicy: an unconfigured origin is rejected in production
+ok 3 - [OFFLINE] corsPolicy: an unconfigured origin is rejected in production
+  ---
+  duration_ms: 0.08999
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] corsPolicy: an UNCONFIGURED chrome-extension:// origin is rejected in production (not auto-allowed just for being an extension)
+ok 4 - [OFFLINE] corsPolicy: an UNCONFIGURED chrome-extension:// origin is rejected in production (not auto-allowed just for being an extension)
+  ---
+  duration_ms: 0.090479
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] corsPolicy: any chrome-extension:// origin is allowed in development (local unpacked-extension convenience)
+ok 5 - [OFFLINE] corsPolicy: any chrome-extension:// origin is allowed in development (local unpacked-extension convenience)
+  ---
+  duration_ms: 0.086578
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] corsPolicy: localhost origins allowed in development, rejected in production unless explicitly configured
+ok 6 - [OFFLINE] corsPolicy: localhost origins allowed in development, rejected in production unless explicitly configured
+  ---
+  duration_ms: 0.25391
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] corsPolicy: a random third-party site is rejected in both environments
+ok 7 - [OFFLINE] corsPolicy: a random third-party site is rejected in both environments
+  ---
+  duration_ms: 0.192205
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] corsPolicy: preflight (OPTIONS) note - not independently testable offline
+ok 8 - [OFFLINE] corsPolicy: preflight (OPTIONS) note - not independently testable offline
+  ---
+  duration_ms: 1.150873
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: valid URL + Web Risk MATCH -> success:true, matched:true, threat data preserved
+ok 9 - [OFFLINE] POST /check: valid URL + Web Risk MATCH -> success:true, matched:true, threat data preserved
+  ---
+  duration_ms: 2.071802
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: valid URL + Web Risk NO_MATCH ({} response) -> success:true, matched:false
+ok 10 - [OFFLINE] POST /check: valid URL + Web Risk NO_MATCH ({} response) -> success:true, matched:false
+  ---
+  duration_ms: 1.472444
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: missing url field -> 400, success:false, Google never called
+ok 11 - [OFFLINE] POST /check: missing url field -> 400, success:false, Google never called
+  ---
+  duration_ms: 0.197618
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: malformed URL string -> 400, success:false
+ok 12 - [OFFLINE] POST /check: malformed URL string -> 400, success:false
+  ---
+  duration_ms: 0.143114
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: non-http(s) scheme (javascript:) -> 400, rejected
+ok 13 - [OFFLINE] POST /check: non-http(s) scheme (javascript:) -> 400, rejected
+  ---
+  duration_ms: 0.14312
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: non-object body -> 400
+ok 14 - [OFFLINE] POST /check: non-object body -> 400
+  ---
+  duration_ms: 0.162371
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: Google HTTP 500 -> normalized UNAVAILABLE (success:false), not a crash, not a match
+ok 15 - [OFFLINE] POST /check: Google HTTP 500 -> normalized UNAVAILABLE (success:false), not a crash, not a match
+  ---
+  duration_ms: 0.369827
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: Google HTTP 429 (rate limited) -> UNAVAILABLE, never MATCH
+ok 16 - [OFFLINE] POST /check: Google HTTP 429 (rate limited) -> UNAVAILABLE, never MATCH
+  ---
+  duration_ms: 0.310252
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: Google HTTP 403 (invalid API key) -> UNAVAILABLE, key never echoed back
+ok 17 - [OFFLINE] POST /check: Google HTTP 403 (invalid API key) -> UNAVAILABLE, key never echoed back
+  ---
+  duration_ms: 0.482628
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: simulated timeout (fetch rejects with AbortError) -> UNAVAILABLE
+ok 18 - [OFFLINE] POST /check: simulated timeout (fetch rejects with AbortError) -> UNAVAILABLE
+  ---
+  duration_ms: 0.632735
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: malformed (non-JSON) Google response -> UNAVAILABLE, not a crash
+ok 19 - [OFFLINE] POST /check: malformed (non-JSON) Google response -> UNAVAILABLE, not a crash
+  ---
+  duration_ms: 0.335042
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] POST /check: API key never present in the response body across match/no-match/error branches
+ok 20 - [OFFLINE] POST /check: API key never present in the response body across match/no-match/error branches
+  ---
+  duration_ms: 0.723903
+  type: 'test'
+  ...
+# Subtest: checkUrl: a threat.threatTypes response is a MATCH with expireTime preserved
+ok 21 - checkUrl: a threat.threatTypes response is a MATCH with expireTime preserved
+  ---
+  duration_ms: 2.016296
+  type: 'test'
+  ...
+# Subtest: checkUrl: an empty {} response (Google's documented no-match shape) is NO MATCH
+ok 22 - checkUrl: an empty {} response (Google's documented no-match shape) is NO MATCH
+  ---
+  duration_ms: 0.392559
+  type: 'test'
+  ...
+# Subtest: checkUrl: a threat object with an empty threatTypes array is treated as NO MATCH, not a crash
+ok 23 - checkUrl: a threat object with an empty threatTypes array is treated as NO MATCH, not a crash
+  ---
+  duration_ms: 1.356423
+  type: 'test'
+  ...
+# Subtest: checkUrl: HTTP 500 -> UNAVAILABLE (never a match, never treated as safe)
+ok 24 - checkUrl: HTTP 500 -> UNAVAILABLE (never a match, never treated as safe)
+  ---
+  duration_ms: 0.687113
+  type: 'test'
+  ...
+# Subtest: checkUrl: HTTP 403 (invalid/restricted API key) -> UNAVAILABLE
+ok 25 - checkUrl: HTTP 403 (invalid/restricted API key) -> UNAVAILABLE
+  ---
+  duration_ms: 0.573579
+  type: 'test'
+  ...
+# Subtest: checkUrl: HTTP 429 (rate limited by Google) -> UNAVAILABLE, not MATCH
+ok 26 - checkUrl: HTTP 429 (rate limited by Google) -> UNAVAILABLE, not MATCH
+  ---
+  duration_ms: 0.308004
+  type: 'test'
+  ...
+# Subtest: checkUrl: malformed (non-JSON-parseable) response -> UNAVAILABLE
+ok 27 - checkUrl: malformed (non-JSON-parseable) response -> UNAVAILABLE
+  ---
+  duration_ms: 0.253245
+  type: 'test'
+  ...
+# Subtest: checkUrl: network failure (fetch rejects) -> UNAVAILABLE
+ok 28 - checkUrl: network failure (fetch rejects) -> UNAVAILABLE
+  ---
+  duration_ms: 0.289996
+  type: 'test'
+  ...
+# Subtest: checkUrl: request that never resolves -> times out -> UNAVAILABLE (never hangs)
+ok 29 - checkUrl: request that never resolves -> times out -> UNAVAILABLE (never hangs)
+  ---
+  duration_ms: 51.79073
+  type: 'test'
+  ...
+# Subtest: checkUrl: missing GOOGLE_WEB_RISK_API_KEY -> UNAVAILABLE, and no request is even attempted
+ok 30 - checkUrl: missing GOOGLE_WEB_RISK_API_KEY -> UNAVAILABLE, and no request is even attempted
+  ---
+  duration_ms: 0.377626
+  type: 'test'
+  ...
+# Subtest: buildRequestUrl: uses the documented Lookup API endpoint, all three threat types, and never logs/exposes the key outside the URL param Google itself requires
+ok 31 - buildRequestUrl: uses the documented Lookup API endpoint, all three threat types, and never logs/exposes the key outside the URL param Google itself requires
+  ---
+  duration_ms: 0.14839
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] A. SAFE(29) + MATCH -> final HIGH_RISK, original score preserved separately
+ok 32 - [OFFLINE] A. SAFE(29) + MATCH -> final HIGH_RISK, original score preserved separately
+  ---
+  duration_ms: 2.044601
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] B. SUSPICIOUS(42) + MATCH -> final HIGH_RISK, original score preserved separately
+ok 33 - [OFFLINE] B. SUSPICIOUS(42) + MATCH -> final HIGH_RISK, original score preserved separately
+  ---
+  duration_ms: 0.20172
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] C. HIGH_RISK(75) + MATCH -> remains HIGH_RISK, score unchanged (Web Risk corroborates, doesn't need to escalate further)
+ok 34 - [OFFLINE] C. HIGH_RISK(75) + MATCH -> remains HIGH_RISK, score unchanged (Web Risk corroborates, doesn't need to escalate further)
+  ---
+  duration_ms: 0.106179
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] D. SAFE(29) + NO_MATCH -> remains SAFE, score unchanged
+ok 35 - [OFFLINE] D. SAFE(29) + NO_MATCH -> remains SAFE, score unchanged
+  ---
+  duration_ms: 0.108917
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] E. SUSPICIOUS(42) + NO_MATCH -> remains SUSPICIOUS, score unchanged
+ok 36 - [OFFLINE] E. SUSPICIOUS(42) + NO_MATCH -> remains SUSPICIOUS, score unchanged
+  ---
+  duration_ms: 0.192061
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] F. SAFE(29) + UNAVAILABLE -> remains SAFE, score unchanged
+ok 37 - [OFFLINE] F. SAFE(29) + UNAVAILABLE -> remains SAFE, score unchanged
+  ---
+  duration_ms: 0.108606
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] G. SUSPICIOUS(42) + UNAVAILABLE -> remains SUSPICIOUS, score unchanged
+ok 38 - [OFFLINE] G. SUSPICIOUS(42) + UNAVAILABLE -> remains SUSPICIOUS, score unchanged
+  ---
+  duration_ms: 0.125515
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] H. escalation score is exactly max(original, 60) - never +50, never a flat 100
+ok 39 - [OFFLINE] H. escalation score is exactly max(original, 60) - never +50, never a flat 100
+  ---
+  duration_ms: 0.271108
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] I. escalated result always carries originalRiskScore/originalVerdict/webRisk/webRiskOverride distinctly from the final riskScore/verdict
+ok 40 - [OFFLINE] I. escalated result always carries originalRiskScore/originalVerdict/webRisk/webRiskOverride distinctly from the final riskScore/verdict
+  ---
+  duration_ms: 0.716587
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] fuseWebRiskIntoRisk is referentially transparent (same inputs -> deep-equal outputs)
+ok 41 - [OFFLINE] fuseWebRiskIntoRisk is referentially transparent (same inputs -> deep-equal outputs)
+  ---
+  duration_ms: 0.651159
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] the 'not yet checked' placeholder (available:false, pending:true) used by background.js's emptyRecord() is treated as a safe passthrough
+ok 42 - [OFFLINE] the 'not yet checked' placeholder (available:false, pending:true) used by background.js's emptyRecord() is treated as a safe passthrough
+  ---
+  duration_ms: 0.172602
+  type: 'test'
+  ...
+# Subtest: [OFFLINE] threatTypeLabel() maps the three documented Web Risk threat types to human-readable labels, else null
+ok 43 - [OFFLINE] threatTypeLabel() maps the three documented Web Risk threat types to human-readable labels, else null
+  ---
+  duration_ms: 0.0748
+  type: 'test'
+  ...
+1..43
+# tests 43
+# suites 0
+# pass 43
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 285.241014

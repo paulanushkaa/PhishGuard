@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PhishGuard - Warning</title>
+  <link rel="stylesheet" href="warning.css" />
+</head>
+<body>
+  <div class="wn-root">
+    <div class="wn-icon">⚠</div>
+    <h1>This site was flagged as high risk</h1>
+    <p class="wn-sub">PhishGuard's combined analysis of the URL, webpage behavior, machine-learning
+      prediction, and available domain/DNS data suggests this page may be attempting to
+      steal personal information or credentials.</p>
+
+    <div class="wn-score-box">
+      <span class="wn-score-label">Risk Score</span>
+      <span class="wn-score-value" id="wn-score">-</span>
+      <span class="wn-score-max">/ 100</span>
+    </div>
+
+    <div class="wn-url-box">
+      <div class="wn-url-label">Blocked address</div>
+      <div class="wn-url-value" id="wn-url">-</div>
+    </div>
+
+    <div class="wn-webrisk-box" id="wn-webrisk-box" style="display:none">
+      <p class="wn-webrisk-text" id="wn-webrisk-text"></p>
+      <p class="wn-webrisk-attribution">
+        Advisory provided by Google &middot;
+        <a href="https://docs.cloud.google.com/web-risk/docs/advisory" target="_blank" rel="noopener">Web Risk Advisory</a>
+      </p>
+    </div>
+
+    <div class="wn-actions">
+      <button id="wn-back-btn" class="wn-btn wn-btn-primary">Go back to safety</button>
+      <button id="wn-proceed-btn" class="wn-btn wn-btn-danger">Proceed anyway (not recommended)</button>
+    </div>
+
+    <p class="wn-footer">PhishGuard is a client-side analysis tool and can make mistakes in
+      either direction. Use your own judgment, especially before entering passwords or
+      payment details.</p>
+  </div>
+  <script src="warning.js"></script>
+</body>
+</html>

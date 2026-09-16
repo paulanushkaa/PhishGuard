@@ -1,0 +1,98 @@
+{
+  "model_version": "phishguard-v5.0-gb",
+  "created_at_utc": "2026-09-01T18:32:09Z",
+  "classifier_type": "GradientBoostingClassifier (scikit-learn), exported as JSON boosted regression trees for pure-JS inference",
+  "algorithm_family": "Gradient-boosted decision trees (same family as XGBoost/LightGBM: sequential trees fit to residuals). NOT XGBoost itself - see eval_report_gb.json 'algorithm_note' for why.",
+  "n_estimators": 120,
+  "learning_rate": 0.1,
+  "feature_schema_version": "2.0.0",
+  "feature_names_in_order": [
+    "url_length",
+    "hostname_length",
+    "path_length",
+    "query_length",
+    "fragment_length",
+    "path_depth",
+    "num_url_components",
+    "hostname_digit_count",
+    "hostname_digit_ratio",
+    "path_digit_count",
+    "path_digit_ratio",
+    "dot_count",
+    "hostname_hyphen_count",
+    "path_hyphen_count",
+    "underscore_count",
+    "special_char_count",
+    "at_count",
+    "percent_count",
+    "equal_count",
+    "amp_count",
+    "question_count",
+    "slash_count",
+    "subdomain_count",
+    "max_label_length",
+    "hostname_entropy",
+    "url_entropy",
+    "path_entropy",
+    "is_ip_address",
+    "is_punycode",
+    "suspicious_tld",
+    "tld_length",
+    "suspicious_port",
+    "is_shortener",
+    "has_percent_encoding",
+    "suspicious_scheme",
+    "keyword_hit_ratio"
+  ],
+  "preprocessing": {
+    "url_normalization": "prepend http:// if no scheme present before parsing",
+    "missing_values": "impute 0",
+    "scaling": "none - tree-based model is scale-invariant",
+    "https_handling": "is_https is NOT an ML feature; HTTPS is tracked as an informational fact only and never scored as risk evidence in either direction"
+  },
+  "calibration": {
+    "method": "platt_sigmoid",
+    "w": 7.040254326878716,
+    "b": -3.3158481367795076,
+    "formula": "calibrated_probability = 1 / (1 + exp(-(w * raw_gb_probability + b)))",
+    "fit_on": "validation split (domain-disjoint from test)"
+  },
+  "split_methodology": "Domain-aware (group) split: URLs grouped by registrable domain via a real Public Suffix List parser; each domain assigned entirely to train, val, or test. Zero domain overlap verified programmatically (see train_model.domain_aware_split()'s assertions). IDENTICAL split code/seed to the RandomForest model (train_model.py) for a fair comparison.",
+  "test_set_metrics": {
+    "accuracy": 0.8662836543877436,
+    "precision": 0.9051285235316031,
+    "recall": 0.8190807955950107,
+    "f1_score": 0.8599575271354413,
+    "roc_auc": 0.938789898229894,
+    "pr_auc": 0.9472891148044424,
+    "confusion_matrix": {
+      "tn": 8091,
+      "fp": 764,
+      "fn": 1610,
+      "tp": 7289
+    },
+    "false_positive_rate": 0.08627893845285149,
+    "false_negative_rate": 0.18091920440498932,
+    "recall_on_phishing_confirmed_only": 0.8321133036282623,
+    "recall_on_malicious_generic_only": 0.7877629063097514,
+    "false_positive_rate_by_legit_source": {
+      "legit_browsing_history": {
+        "n": 6579,
+        "false_positive_rate": 0.10731114151086792
+      },
+      "legit_modern_brand": {
+        "n": 32,
+        "false_positive_rate": 0.0
+      },
+      "legit_synthetic_authpath": {
+        "n": 270,
+        "false_positive_rate": 0.025925925925925925
+      },
+      "legit_top_domain": {
+        "n": 1974,
+        "false_positive_rate": 0.025835866261398176
+      }
+    }
+  },
+  "decision_threshold_note": "Both raw and calibrated ML probability are ONE input into PhishGuard's riskEngine.js evidence fusion; ML alone is structurally incapable of reaching the HIGH_RISK verdict (see risk engine weight caps + corroboration policy)."
+}

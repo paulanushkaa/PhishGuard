@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PhishGuard</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="pg-root">
+    <header class="pg-header">
+      <img src="../icons/icon48.png" alt="" class="pg-logo" />
+      <div class="pg-title">
+        <div class="pg-name">PhishGuard</div>
+        <div class="pg-domain" id="pg-domain">-</div>
+      </div>
+      <button id="pg-settings-btn" class="pg-settings-btn" title="Settings">⚙</button>
+    </header>
+
+    <div id="pg-loading" class="pg-loading">Analyzing this page…</div>
+
+    <div id="pg-content" class="pg-content" style="display:none">
+      <div class="pg-verdict-card" id="pg-verdict-card">
+        <div class="pg-verdict-badge" id="pg-verdict-badge">-</div>
+        <div class="pg-score-row">
+          <span class="pg-score-label">Risk Score</span>
+          <span class="pg-score-value" id="pg-score-value">-</span>
+        </div>
+        <div class="pg-meter-track">
+          <div class="pg-meter-fill" id="pg-meter-fill"></div>
+        </div>
+      </div>
+
+      <div class="pg-layers">
+        <div class="pg-layer">
+          <span class="pg-layer-label">ML Model</span>
+          <span class="pg-layer-value" id="pg-layer-ml">-</span>
+        </div>
+        <div class="pg-layer">
+          <span class="pg-layer-label">Webpage</span>
+          <span class="pg-layer-value" id="pg-layer-dom">-</span>
+        </div>
+        <div class="pg-layer pg-layer-domain">
+          <span class="pg-layer-label">Domain</span>
+          <span class="pg-layer-value" id="pg-layer-domain">-</span>
+        </div>
+        <div class="pg-layer pg-layer-webrisk">
+          <span class="pg-layer-label">Google Web Risk</span>
+          <span class="pg-layer-value" id="pg-layer-webrisk">-</span>
+        </div>
+      </div>
+
+      <div class="pg-original-note" id="pg-original-note" style="display:none"></div>
+
+      <div class="pg-reasons">
+        <div class="pg-reasons-title">Why?</div>
+        <ul id="pg-reasons-list" class="pg-reasons-list"></ul>
+      </div>
+
+      <div class="pg-facts" id="pg-facts">
+        <div class="pg-facts-title">Page facts <span class="pg-facts-note">(not scored as risk evidence)</span></div>
+        <ul id="pg-facts-list" class="pg-facts-list"></ul>
+      </div>
+
+      <div class="pg-url-box">
+        <div class="pg-url-label">Current URL</div>
+        <div class="pg-url-value" id="pg-url-value">-</div>
+      </div>
+    </div>
+
+    <div id="pg-unavailable" class="pg-unavailable" style="display:none">
+      PhishGuard doesn't analyze this type of page (browser internal page, local file, etc.)
+    </div>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

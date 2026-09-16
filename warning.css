@@ -1,0 +1,106 @@
+:root {
+  --wn-bg: #1a0e0e;
+  --wn-panel: #2a1414;
+  --wn-border: #4a1f1f;
+  --wn-text: #f5e8e8;
+  --wn-text-dim: #c99;
+  --wn-danger: #ef4444;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--wn-bg);
+  color: var(--wn-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+.wn-root {
+  max-width: 520px;
+  padding: 40px;
+  text-align: center;
+}
+.wn-icon { font-size: 48px; margin-bottom: 12px; }
+h1 { font-size: 22px; margin: 0 0 12px; }
+.wn-sub { color: var(--wn-text-dim); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+
+.wn-score-box {
+  background: var(--wn-panel);
+  border: 1px solid var(--wn-border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.wn-score-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wn-text-dim);
+  margin-bottom: 4px;
+}
+.wn-score-value {
+  font-family: monospace;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--wn-danger);
+}
+.wn-score-max { color: var(--wn-text-dim); font-size: 14px; }
+
+.wn-url-box {
+  background: var(--wn-panel);
+  border: 1px solid var(--wn-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+.wn-url-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--wn-text-dim);
+  margin-bottom: 4px;
+}
+.wn-url-value {
+  font-family: monospace;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.wn-webrisk-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--wn-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+.wn-webrisk-text {
+  margin: 0 0 6px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--wn-text);
+}
+.wn-webrisk-attribution {
+  margin: 0;
+  font-size: 10.5px;
+  color: var(--wn-text-dim);
+}
+.wn-webrisk-attribution a { color: var(--wn-text-dim); }
+
+.wn-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.wn-btn {
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--wn-border);
+}
+.wn-btn-primary { background: #2dd4bf; border-color: #2dd4bf; color: #06201c; }
+.wn-btn-danger { background: transparent; color: var(--wn-danger); border-color: var(--wn-danger); }
+
+.wn-footer { font-size: 11.5px; color: var(--wn-text-dim); line-height: 1.5; }

@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "PhishGuard v5.5 - Intelligent Phishing Detection",
+  "version": "5.5.0",
+  "description": "Multi-layer phishing detection with evidence corroboration: no single signal alone can block a site. Combines a domain-aware-evaluated ML model, URL analysis, webpage/DOM analysis, redirect-chain analysis, and optional domain/DNS intelligence, requiring independently corroborated evidence before flagging a site as high risk.",
+  "permissions": [
+    "tabs",
+    "webNavigation",
+    "webRequest",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/psl.js",
+        "js/psl_data.json"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "popup/options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

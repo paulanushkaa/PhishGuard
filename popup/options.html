@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PhishGuard Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <div class="opt-root">
+    <h1>PhishGuard Settings</h1>
+
+    <section class="opt-section">
+      <h2>Google Web Risk backend</h2>
+      <p class="opt-desc">
+        PhishGuard's own detection (ML, URL, webpage, domain, DNS analysis) always runs locally and
+        needs no configuration. Google Web Risk is an additional, independent external check - it
+        requires a PhishGuard backend URL below. If this is left unset or unreachable, PhishGuard
+        works exactly as it did before this feature existed; Web Risk simply shows "Unavailable."
+      </p>
+      <label class="opt-label" for="opt-backend-url">PhishGuard backend URL</label>
+      <input
+        class="opt-input"
+        id="opt-backend-url"
+        type="text"
+        placeholder="http://localhost:8787"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <div class="opt-actions">
+        <button id="opt-save-btn" class="opt-btn opt-btn-primary">Save</button>
+        <button id="opt-test-btn" class="opt-btn">Test Connection</button>
+        <button id="opt-reset-btn" class="opt-btn">Reset to default</button>
+      </div>
+      <div class="opt-status" id="opt-status"></div>
+      <p class="opt-desc" style="margin-top:12px">
+        This backend never receives your passwords, cookies, form contents, or page HTML - only
+        the URL being checked. The Google Web Risk API key is stored on the backend and is never
+        present anywhere in this extension. See "Privacy" below for the full data flow.
+      </p>
+    </section>
+
+    <section class="opt-section">
+      <h2>What is Google Web Risk validation?</h2>
+      <p class="opt-desc">
+        Web Risk is a separate, independent evidence source layered on top of PhishGuard's own
+        analysis - it does not replace it. A confirmed Web Risk match will move a result to
+        High Risk even if PhishGuard's own score alone did not; a "no match" result never lowers
+        or overrides PhishGuard's own finding, since Web Risk not having a listing for a URL is
+        not proof that the URL is safe. See
+        <a href="https://docs.cloud.google.com/web-risk/docs/overview" target="_blank" rel="noopener">Google's Web Risk overview</a>
+        for details on the underlying service.
+      </p>
+    </section>
+
+    <section class="opt-section">
+      <h2>Privacy</h2>
+      <p class="opt-desc">
+        1. PhishGuard's own security analysis (ML model, URL structure, webpage/DOM content,
+        domain age, DNS) runs locally in your browser and is not sent anywhere.<br /><br />
+        2. When a backend URL is configured above, the URL of the page you're visiting is sent to
+        that PhishGuard backend so it can be checked against Google Web Risk.<br /><br />
+        3. The backend forwards only that URL to Google's Web Risk Lookup API and relays back a
+        match / no-match result.<br /><br />
+        4. The Google Web Risk API key is stored only in the backend's own environment and is
+        never sent to, stored in, or visible from this extension.<br /><br />
+        5. PhishGuard does not send passwords, cookies, form field contents, page HTML/screenshots,
+        browsing history, or any other personal information to the backend or to Google - only the
+        URL required for the threat lookup.
+      </p>
+    </section>
+
+    <section class="opt-section">
+      <h2>Protection notice</h2>
+      <p class="opt-desc">
+        Google's Web Risk terms require this notice to be shown before you rely on Web Risk-based
+        protection (see
+        <a href="https://docs.cloud.google.com/web-risk/docs/user-warnings" target="_blank" rel="noopener">Web Risk user warnings</a>):
+        Google works to provide the most accurate and up-to-date information about unsafe web
+        resources. However, Google cannot guarantee that its information is comprehensive and
+        error-free: some risky sites may not be identified (false negatives), and some safe sites
+        may be identified in error (false positives). The same caveat applies to PhishGuard's own
+        local analysis - use your own judgment, especially before entering passwords or payment
+        details.
+      </p>
+    </section>
+
+    <section class="opt-section">
+      <h2>About the other intelligence layers</h2>
+      <p class="opt-desc">
+        Domain age (via RDAP) and DNS records (via Google's public DNS-over-HTTPS) are
+        looked up automatically with no API key required. They may occasionally be
+        unavailable (e.g. a registry not supporting RDAP) - PhishGuard will show
+        "Unavailable" rather than fabricate a result.
+      </p>
+    </section>
+  </div>
+  <script src="options.js" type="module"></script>
+</body>
+</html>
